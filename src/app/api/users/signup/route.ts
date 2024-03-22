@@ -6,7 +6,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { email, username, password } = body;
     const signUpResponse = await registerUser(email, username, password);
-    return NextResponse.json(signUpResponse);
+    const response = NextResponse.json(signUpResponse);
+    response.cookies.set("id", `${signUpResponse.id}`);
+    return response;
   } catch (error) {
     return NextResponse.json({
       status: 500,
