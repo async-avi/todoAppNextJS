@@ -8,18 +8,17 @@ function Page() {
   const router = useRouter();
 
   const [user, setUser] = useState({
-    email: "",
-    username: "",
+    param: "",
     password: "",
   });
 
   async function handleSubmit(e: any) {
     e.preventDefault();
     console.log(user);
-    if (user.email && user.username && user.password) {
-      const response = await axios.post("api/users/signup", user);
+    if (user.param && user.password) {
+      const response = await axios.post("api/users/login", user);
       const data = response.data;
-      router.push(`user/${data.id}`);
+      console.log(data);
     } else {
       alert("Invalid inputs");
     }
@@ -27,22 +26,14 @@ function Page() {
 
   return (
     <>
-      <h3>Signup</h3>
+      <h3>Login</h3>
       <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="email"
-          className="text-black"
-          onChange={(e) => {
-            setUser({ ...user, email: e.target.value });
-          }}
-        />
-        <input
           type="text"
-          placeholder="username"
+          placeholder="username/email"
           className="text-black"
           onChange={(e) => {
-            setUser({ ...user, username: e.target.value });
+            setUser({ ...user, param: e.target.value });
           }}
         />
         <input
