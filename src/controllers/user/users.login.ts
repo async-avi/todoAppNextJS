@@ -1,4 +1,5 @@
 import prisma from "@/db/db";
+import jwt from "jsonwebtoken";
 
 export default async function loginUser(param: string, password: string) {
   try {
@@ -14,14 +15,22 @@ export default async function loginUser(param: string, password: string) {
     });
 
     if (concernedUserByEmail) {
+      const signEmail = jwt.sign(
+        concernedUserByEmail.id,
+        process.env.JWT_SECRET!
+      );
       return {
         status: 200,
-        id: concernedUserByEmail.id,
+        id: signEmail,
       };
     } else if (concernedUserByUsername) {
+      const signUsername = jwt.sign(
+        concernedUserByUsername.id,
+        process.env.JWT_SECRET!
+      );
       return {
         status: 200,
-        id: concernedUserByUsername.id,
+        id: signUsername,
       };
     }
     return {
