@@ -19,6 +19,7 @@ model User{
   username String @unique
   password String
   todos Todo[]
+  status String @default("Pending")
   createdAt DateTime @default(now())
 }
 
